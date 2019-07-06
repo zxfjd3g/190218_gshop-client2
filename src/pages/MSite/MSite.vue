@@ -125,23 +125,26 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import Swiper from 'swiper/dist/js/swiper'
+  import Swiper from 'swiper'
   import "swiper/dist/css/swiper.css"
   import ShopList from '../../components/ShopList/ShopList'
 
-
-  var mySwiper = new Swiper ('.swiper-container', {
-    direction: 'vertical', // 垂直切换选项
-    loop: true, // 循环模式选项
-    
-    // 如果需要分页器
-    pagination: {
-      el: '.swiper-pagination',
-    },
-  })
-
   export default {
     name: 'Msite',
+
+    // 组件界面初始显示之后立即回调
+    mounted () {
+      // 创建对象的时机: 在列表数据显示之后
+      var mySwiper = new Swiper ('.swiper-container', {
+        // direction: 'vertical', // 垂直切换选项
+        loop: true, // 循环模式选项
+        // 如果需要分页器
+        pagination: {
+          el: '.swiper-pagination',
+        },
+      })
+    },
+
     components: {
       ShopList
     }

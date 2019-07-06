@@ -1,7 +1,7 @@
 <template>
   <section class="msite">
     <!--首页头部-->
-    <Header title="xxx">
+    <Header :title="address.name || '正在定位中'">
       <span class="header_search" slot="left">
         <i class="iconfont icon-sousuo"></i>
       </span>
@@ -125,12 +125,17 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import { mapState } from 'vuex'
   import Swiper from 'swiper'
   import "swiper/dist/css/swiper.css"
   import ShopList from '../../components/ShopList/ShopList'
 
   export default {
     name: 'Msite',
+
+    computed: {
+      ...mapState(['address'])
+    },
 
     // 组件界面初始显示之后立即回调
     mounted () {

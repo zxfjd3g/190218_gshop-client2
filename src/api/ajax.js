@@ -7,7 +7,8 @@
 */
 
 import axios from 'axios'
-const qs = require('qs')
+// const qs = require('qs')
+import qs from 'qs'
 
 // 请求超时的全局配置
 axios.defaults.timeout = 20000 // 20s

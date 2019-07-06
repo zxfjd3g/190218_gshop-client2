@@ -32,13 +32,15 @@ export default {
   /* 
   获取分类列表的异步action
   */
-  async getCategorys({commit}) {
+  async getCategorys({commit}, callback) {
     // 发异步ajax请求
     const result = await reqCategorys()
     // 有了结果后, 提交mutation
     if (result.code===0) {
       const categorys = result.data
       commit(RECEIVE_CATEGORYS, categorys)
+      // 在更新状态数据后执行回调函数
+      typeof callback === 'function' && callback() // 发通知
     }
   },
 

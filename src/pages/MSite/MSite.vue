@@ -74,24 +74,29 @@
 
         // 返回结果
         return bigArr
-
-        const obj = {}
-        const arr = []
-        arr.push(obj)
-        arr.push(obj)
-        arr.push(obj)
       }
     },
 
     // 组件界面初始显示之后立即回调
-    mounted () {
+    async mounted () {
       // 分发action, 异步获取商家列表
       this.$store.dispatch("getShops")
       // 分发action, 异步获取分类列表
-      this.$store.dispatch("getCategorys")
-
-      // 创建对象的时机: 在列表数据显示之后
-      var mySwiper = new Swiper ('.swiper-container', {
+      /* this.$store.dispatch("getCategorys", () => { // categorys状态数据更新了
+        // 将回调延迟到下次 DOM 更新循环之后执行。在修改数据之后立即使用它，然后等待 DOM 更新。
+        this.$nextTick(() => { // 回调函数在界面更新之后执行
+          new Swiper ('.swiper-container', {
+            // direction: 'vertical', // 垂直切换选项
+            loop: true, // 循环模式选项
+            // 如果需要分页器
+            pagination: {
+              el: '.swiper-pagination',
+            },
+          })
+        })
+      }) */
+      await this.$store.dispatch("getCategorys") // 返回的promise在状态数据变化且界面更新后才成功
+      new Swiper ('.swiper-container', {
         // direction: 'vertical', // 垂直切换选项
         loop: true, // 循环模式选项
         // 如果需要分页器
@@ -99,7 +104,44 @@
           el: '.swiper-pagination',
         },
       })
+
+      // 创建对象的时机: 在列表数据显示之后
+      /* setTimeout(() => {
+        var mySwiper = new Swiper ('.swiper-container', {
+          // direction: 'vertical', // 垂直切换选项
+          loop: true, // 循环模式选项
+          // 如果需要分页器
+          pagination: {
+            el: '.swiper-pagination',
+          },
+        })
+      }, 1000) */
     },
+
+    /* 
+    解决创建swiper对象之后不能正常轮播
+    原因: 创建对象的时机太早(必须在列表显示之后)
+    解决: 
+      1. watch + nextTick()
+      2. callback + nextTick()
+      3. 利用dispatch()返回的promise
+    */
+    /* watch: {
+      // 更新状态数据 ==> 立即同步调用监视的回调函数 ==> 异步更新界面
+      categorys () { // categorys状态数据更新了
+        // 将回调延迟到下次 DOM 更新循环之后执行。在修改数据之后立即使用它，然后等待 DOM 更新。
+        this.$nextTick(() => { // 回调函数在界面更新之后执行
+          new Swiper ('.swiper-container', {
+            // direction: 'vertical', // 垂直切换选项
+            loop: true, // 循环模式选项
+            // 如果需要分页器
+            pagination: {
+              el: '.swiper-pagination',
+            },
+          })
+        })
+      }
+    }, */
 
     components: {
       ShopList

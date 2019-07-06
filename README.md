@@ -43,7 +43,7 @@
 # day02
 ## 1. 启动后台应用并测试
     运行后台项目(启动mongodb服务),
-    使用postman测试后台接口, 如果不一致, 修改接口文档
+    使用postman测试后台接口, 如果不一致, 与后台工程师对接 / 修改接口文档
 
 ## 2. 封装ajax:
 ### 1). post请求携带数据的方式
@@ -53,14 +53,14 @@
     2). Content-Type : application/json;charset=utf-8
         用于json字符串参数
         例如: {"name": "%E5%B0%8F%E6%98%8E", "age": 12}
-    3). multipart/form-data
+    3). Content-Type : multipart/form-data
         用于文件上传请求
     说明:
         如果axiox配置的data是对象, 使用json方式传递参数, 如果data是字符串就用urlencoded方式
 
 ### 2). axios的理解和使用
     1). axios的特点
-        在浏览器端: 使用XMLHttpRequest对象发ajax请求
+        在浏览器端: 使用XMLHttpRequest(xhr)对象发ajax请求
         在Node服务器端: 使用http包发请求
         使用Promise封装异步请求
         使用拦截器对请求和响应进行拦截处理
